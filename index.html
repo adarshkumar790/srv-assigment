@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Premier Schools Exhibition – Gurugram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="schools.css">
+  <link rel="stylesheet" href="choose.css">
+  <link rel="stylesheet" href="mustvisit.css">
+  <link rel="stylesheet" href="footer.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="header">
+  <img src="src/header-left.png" class="header__logo" alt="Logo">
+
+  <a href="#" class="header__cta">
+    <span class="header__cta-icon">↗</span>
+    <span class="header__cta-text">REGISTER NOW</span>
+  </a>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero__inner">
+
+    <div class="hero__content">
+      <h1 class="hero__title">
+        Discover Gurugram’s<br>
+        <span>Top 30+ Schools</span>
+      </h1>
+      <p class="hero__subtitle">ALL IN ONE PLACE</p>
+
+      <div class="hero__event">
+        <strong>Apparel House,</strong> Sec 44, Gurugram<br>
+        <strong>2–3 August 2025</strong> &nbsp; Sat–Sun | 10AM – 6PM
+      </div>
+    </div>
+
+    <!-- HERO GALLERY -->
+    <div class="hero__gallery">
+      <div class="hero__column">
+        <div class="hero__track">
+          <div class="hero__img" style="background-image:url('src/hero-gallery1.jpg')"></div>
+          <div class="hero__img" style="background-image:url('src/hero-gallery2.jpg')"></div>
+          <div class="hero__img" style="background-image:url('src/hero-gallery3.jpg')"></div>
+        </div>
+      </div>
+
+      <div class="hero__column">
+        <div class="hero__track delay1">
+          <div class="hero__img" style="background-image:url('src/hero-gallery2.jpg')"></div>
+          <div class="hero__img" style="background-image:url('src/hero-gallery3.jpg')"></div>
+          <div class="hero__img" style="background-image:url('src/hero-gallery1.jpg')"></div>
+        </div>
+      </div>
+
+      <div class="hero__column">
+        <div class="hero__track delay2">
+          <div class="hero__img" style="background-image:url('src/hero-gallery3.jpg')"></div>
+          <div class="hero__img" style="background-image:url('src/hero-gallery1.jpg')"></div>
+          <div class="hero__img" style="background-image:url('src/hero-gallery2.jpg')"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form class="hero__form">
+      <h2>Enquire Now</h2>
+      <input type="text" placeholder="Parent’s Name" required>
+      <input type="tel" placeholder="Phone Number" required>
+      <input type="text" placeholder="Grade">
+      <button type="submit">SUBMIT</button>
+    </form>
+
+  </div>
+</section>
+
+<!-- ================= DYNAMIC SECTIONS ================= -->
+<div id="schools-container"></div>
+<div id="choose-school-container"></div>
+
+<section class="appointment-image">
+  <img src="src/pschool.png" alt="School Appointment">
+</section>
+
+<div id="mustvisit-container"></div>
+<div id="footer-container"></div>
+
+</main>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+/* Load Schools */
+fetch("school.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("schools-container").innerHTML = html;
+  });
+
+/* Load Choose Section */
+fetch("choose.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("choose-school-container").innerHTML = html;
+  })
+  .then(() => {
+    initChoosePagination();
+  });
+
+/* Load Must Visit Section */
+fetch("exbitation.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("mustvisit-container").innerHTML = html;
+  })
+  .then(() => {
+    if (typeof initMustVisitSlider === "function") {
+      initMustVisitSlider();
+    }
+  });
+
+/* Load Footer */
+fetch("footer.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("footer-container").innerHTML = html;
+  });
+
+/* ===============================
+   CHOOSE MOBILE PAGINATION
+================================ */
+function initChoosePagination() {
+  const grid = document.querySelector('.choose-grid');
+  const dots = document.querySelectorAll('.choose-pagination .dot');
+
+  if (!grid || !dots.length) return;
+
+  grid.addEventListener('scroll', () => {
+    const card = grid.querySelector('.choose-card');
+    if (!card) return;
+
+    const gap = 20;
+    const cardWidth = card.offsetWidth + gap;
+    const index = Math.round(grid.scrollLeft / cardWidth);
+
+    dots.forEach(dot => dot.classList.remove('active'));
+    if (dots[index]) dots[index].classList.add('active');
+  });
+}
+</script>
+
+<!-- Must Visit Slider JS -->
+<script src="mustvisit.js"></script>
+
+</body>
+</html>
